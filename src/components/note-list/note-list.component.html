@@ -1,0 +1,7 @@
+<div class="row nb-note-list">
+    <a [routerLink]="['/notes', note.id]" *ngFor="let note of notes">
+        <nb-note>
+            {{ note.text }}
+        </nb-note>
+    </a>
+</div>
