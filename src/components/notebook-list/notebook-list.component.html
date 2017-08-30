@@ -1,0 +1,31 @@
+<ul class="nav nav-pills nav-stacked">
+    <li>
+        <button type="button" class="btn btn-default"
+            [disabled]="!isNotebookSelected"
+            (click)="deleteNotebookClick()">
+            <span class="glyphicon glyphicon-trash"></span> Delete Notebook
+        </button>        
+    </li>
+</ul>
+<ul class="nav nav-pills nav-stacked">
+    <li role="navigation" *ngFor="let notebook of notebooks"
+        [class.active]="notebook.id === selectedNotebookId"
+        (click)="notebookClick(notebook.id)">
+        <a [routerLink]="['notebooks', notebook.id]">
+            <span class="glyphicon glyphicon-book"></span>&nbsp;
+            <span>{{ notebook.id }} - {{ notebook.title }}</span>
+        </a>
+    </li>
+    <li *ngIf="!createMode">
+        <button type="button" class="btn btn-info" (click)="addNewNotebookClick()">
+            <span class="glyphicon glyphicon-plus"></span> New Notebook
+        </button>        
+    </li>
+    <li *ngIf="createMode">
+        <input type="text" #inputTitle autofocus class="form-control" aria-label="...">
+        <button type = "button" class = "btn btn-info"
+            (click)="createNotebookClick(inputTitle.value)">Create</button>
+        <button type = "button" class = "btn btn-default" 
+            (click)="cancelCreateNotebookClick()">Cancel</button>
+    </li>
+</ul>
