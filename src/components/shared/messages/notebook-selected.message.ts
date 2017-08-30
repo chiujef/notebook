@@ -1,13 +1,21 @@
-export class NotebookSelectedMessage {
+import { CopyMessage } from './copy-message';
+import { Notebook } from '../models/notebook';
+
+export class NotebookSelectedMessage extends CopyMessage {
+    private _notebook: Notebook;
+
     constructor(private _isSelected: boolean,
-        private _notebookId: number
-    ) { }
+        private notebookParam: Notebook
+    ) {
+        super();
+        this._notebook = CopyMessage.copy(notebookParam);
+    }
 
     get isSelected(): boolean {
         return this._isSelected;
     }
 
-    get notebookId(): number {
-        return this._notebookId;
+    get notebook(): Notebook {
+        return this._notebook;
     }
 }

@@ -13,7 +13,7 @@ import { NotebookService } from '../services/notebook.service';
 @Injectable()
 export class NotebookStoreService {
     private notebookSelectedStoreSubject: BehaviorSubject<NotebookSelectedMessage> =
-        new BehaviorSubject(new NotebookSelectedMessage(false, 0));
+        new BehaviorSubject(new NotebookSelectedMessage(false, null));
 
     private notebookStoreSubject: BehaviorSubject<NotebookStoreMessage> =
         new BehaviorSubject(new NotebookStoreMessage(NotebookStoreOperation.None, new Array<Notebook>()));
@@ -23,10 +23,6 @@ export class NotebookStoreService {
 
     getNotebookSelectedStore(): Observable<NotebookSelectedMessage> {
         return this.notebookSelectedStoreSubject.asObservable();
-    }
-
-    setNotebookSelected(notebookId: number): void {
-        this.notebookSelectedStoreSubject.next(new NotebookSelectedMessage(true, notebookId));
     }
 
     getNotebookStore(): Observable<NotebookStoreMessage> {
@@ -41,6 +37,24 @@ export class NotebookStoreService {
             notebookStoreMessage = new NotebookStoreMessage(NotebookStoreOperation.Added, this.notebookStorage);
             this.notebookStoreSubject.next(notebookStoreMessage);
         });
+    }
+
+    getNotebook(notebookId: number): void {
+        let notebookSelectedMessage = null;
+        let notebookSelected = this.notebookStorage.find(notebook => notebook.id === notebookId);
+        if (!notebookSelected) {
+            this.notebookService.getNotebook(notebookId).subscribe((notebook) => {
+                if (!notebook) {
+                    notebookSelectedMessage = new NotebookSelectedMessage(false, new Notebook(''));
+                } else {
+                    notebookSelectedMessage = new NotebookSelectedMessage(true, notebook);
+                }
+                this.notebookSelectedStoreSubject.next(notebookSelectedMessage);
+            });
+        } else {
+            notebookSelectedMessage = new NotebookSelectedMessage(true, notebookSelected);
+            this.notebookSelectedStoreSubject.next(notebookSelectedMessage);
+        }
     }
 
     getAllNotebook(): void {

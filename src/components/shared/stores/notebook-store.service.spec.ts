@@ -14,6 +14,7 @@ import { NotebookStoreService } from './notebook-store.service';
 describe('Notebook Store Service tests', () => {
     class MockNotebookService {
         addNotebook: (notebook: Notebook) => Observable<Notebook>;
+        getNotebook: (notebookId: number) => Observable<Notebook>;
         getAllNotebook: () => Observable<Notebook[]>;
         updateNotebook: (notebook: Notebook) => Observable<Notebook>;
         deleteNotebook: (notebookId: number) => Observable<any>;
@@ -55,25 +56,6 @@ describe('Notebook Store Service tests', () => {
         });
     });
 
-    describe('setNotebookSelected tests', () => {
-        it('should pass the selected notebook id', async() => {
-            const expectedNotebookId: number = 1;
-            notebookStoreService.setNotebookSelected(expectedNotebookId);
-
-            notebookStoreService.getNotebookSelectedStore().subscribe((notebookSelectedMessage) => {
-                expect(notebookSelectedMessage.notebookId).toBe(expectedNotebookId);
-            });
-        });
-
-        it('should set the flag to true when passing a NotebookSelectedMessage', async() => {
-            notebookStoreService.setNotebookSelected(1);
-
-            notebookStoreService.getNotebookSelectedStore().subscribe((notebookSelectedMessage) => {
-                expect(notebookSelectedMessage.isSelected).toBe(true);
-            });
-        });
-    });
-
     describe('getNotebookStore tests', () => {
         it('should be available', async() => {
             expect(notebookStoreService.getNotebookStore).toBeTruthy();
@@ -105,6 +87,57 @@ describe('Notebook Store Service tests', () => {
 
             notebookStoreService.getNotebookStore().subscribe((notebookStoreMessage) => {
                 expect(notebookStoreMessage.notebooks[0].title).not.toBe(NOTEBOOK_DATA_1.title);
+            });
+        });
+    });
+
+    describe('getNotebook tests', () => {
+        it('should get the notebook to the notebook store', async() => {
+            const expectedNotebookId = 1;
+            mockNotebookService.getNotebook = jasmine.createSpy('getNotebook')
+                .and.returnValue(Observable.of(NOTEBOOK_DATA_1));
+
+            notebookStoreService.getNotebook(expectedNotebookId);
+
+            notebookStoreService.getNotebookSelectedStore().subscribe((notebookSelectedMessage) => {
+                expect(mockNotebookService.getNotebook).toHaveBeenCalledWith(expectedNotebookId);
+                expect(notebookSelectedMessage.notebook.id).toBe(NOTEBOOK_DATA_1.id);
+                expect(notebookSelectedMessage.notebook.title).toBe(NOTEBOOK_DATA_1.title);
+            });
+        });
+
+        it('should set the notebook as selected when a valid notebook is found', async() => {
+            mockNotebookService.getNotebook = jasmine.createSpy('getNotebook')
+                .and.returnValue(Observable.of(NOTEBOOK_DATA_1));
+
+            notebookStoreService.getNotebook(1);
+
+            notebookStoreService.getNotebookSelectedStore().subscribe((notebookSelectedMessage) => {
+                expect(notebookSelectedMessage.isSelected).toBe(true);
+            });
+        });
+
+        it('should set the notebook as note selected when the notebook is not found', async() => {
+            const expectedNotebookId = 1;
+            mockNotebookService.getNotebook = jasmine.createSpy('getNotebook')
+                .and.returnValue(null);
+
+            notebookStoreService.getNotebook(expectedNotebookId);
+
+            notebookStoreService.getNotebookSelectedStore().subscribe((notebookSelectedMessage) => {
+                expect(notebookSelectedMessage.isSelected).toBe(false);
+            });
+        });
+
+        it('should return the notebook as immutable', async() => {
+            mockNotebookService.getNotebook = jasmine.createSpy('getNotebook')
+                .and.returnValue(Observable.of(NOTEBOOK_DATA_1));
+
+            notebookStoreService.getNotebook(1);
+            NOTEBOOK_DATA_1.title = 'UPDATE';
+
+            notebookStoreService.getNotebookSelectedStore().subscribe((notebookSelectedMessage) => {
+                expect(notebookSelectedMessage.notebook.title).not.toBe(NOTEBOOK_DATA_1.title);
             });
         });
     });
