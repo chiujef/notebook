@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -7,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import {
   NoteComponent,
+  NoteEditComponent,
   NoteListComponent,
   NotebookListComponent
 } from '../components/index';
@@ -29,13 +31,15 @@ import {
   declarations: [
     AppComponent,
     NoteComponent,
+    NoteEditComponent,
     NoteListComponent,
     NotebookListComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     { provide: 'Window', useValue: window },
