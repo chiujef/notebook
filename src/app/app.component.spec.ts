@@ -59,4 +59,35 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('Notebook App');
   }));
+
+  describe('onResize tests', () => {
+    it('should add the offset to the event\'s innerHeight and save to height', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      const expectedHeight = 10;
+      const event = {
+        target: {
+          innerHeight: 0
+        }
+      };
+      app.offset = 10;
+
+      app.onResize(event);
+
+      expect(app.height).toBe(expectedHeight);
+    });
+  });
+
+  describe('computeHeight tests', () => {
+    it('should add the offset to the height', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      const expectedHeight = 10;
+      app.offset = 10;
+
+      const actual = app.computeHeight(0);
+
+      expect(actual).toBe(expectedHeight);
+    });
+  });
 });
