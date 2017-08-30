@@ -4,6 +4,9 @@ export { NoteStoreMessage, NoteStoreOperation } from './messages/note-store.mess
 export { NotebookSelectedMessage } from './messages/notebook-selected.message';
 export { NotebookStoreMessage, NotebookStoreOperation } from './messages/notebook-store.message';
 
+/* Mocks Export */
+export { MockService } from './mocks/mock.service';
+
 /* Models Export */
 export { Note } from './models/note';
 export { Notebook } from './models/notebook';

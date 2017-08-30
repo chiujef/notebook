@@ -12,6 +12,7 @@ import {
 } from '../components/index';
 
 import {
+  MockService,
   NotebookService,
   NotebookStoreService,
   NoteService,
@@ -38,11 +39,17 @@ import {
   ],
   providers: [
     { provide: 'Window', useValue: window },
+    /*
     NotebookService,
     { provide: NOTEBOOK_API_URL, useValue: NOTEBOOK_API_URL },
+    */
+    { provide: NotebookService, useClass: MockService },
     NotebookStoreService,
+    /*
     NoteService,
     { provide: NOTE_API_URL, useValue: NOTE_API_URL },
+    */
+    { provide: NoteService, useClass: MockService },
     NoteStoreService
   ],
   bootstrap: [AppComponent]
