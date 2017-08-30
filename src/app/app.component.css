@@ -1,0 +1,6 @@
+div.nb-scroller {
+    top: 10px;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+}
