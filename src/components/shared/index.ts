@@ -11,3 +11,7 @@ export { Notebook } from './models/notebook';
 /* Services Export */
 export { NoteService } from './services/note.service';
 export { NotebookService } from './services/notebook.service';
+
+/* Stores Export */
+export { NoteStoreService } from './stores/note-store.service';
+export { NotebookStoreService } from './stores/notebook-store.service';
