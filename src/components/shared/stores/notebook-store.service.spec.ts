@@ -117,7 +117,7 @@ describe('Notebook Store Service tests', () => {
             });
         });
 
-        it('should set the notebook as note selected when the notebook is not found', async() => {
+        it('should set the notebook as not selected when the notebook is not found', async() => {
             const expectedNotebookId = 1;
             mockNotebookService.getNotebook = jasmine.createSpy('getNotebook')
                 .and.returnValue(null);
