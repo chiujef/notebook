@@ -1,4 +1,6 @@
 /* Messages Export */
+export { NoteSelectedMessage } from './messages/note-selected.message';
+export { NoteStoreMessage, NoteStoreOperation } from './messages/note-store.message';
 export { NotebookSelectedMessage } from './messages/notebook-selected.message';
 export { NotebookStoreMessage, NotebookStoreOperation } from './messages/notebook-store.message';
 
