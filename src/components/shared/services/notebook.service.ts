@@ -24,6 +24,15 @@ export class NotebookService {
                 .catch(this.handleError);
     }
 
+    getNotebook(notebookId: number): Observable<Notebook> {
+        return this.http
+            .get(`${this.apiUrl}/${notebookId}`)
+            .map(
+                res => res.json().data as Notebook
+            )
+            .catch(this.handleError);
+    }
+
     getAllNotebook(): Observable<Notebook[]> {
         return this.http
                 .get(`${this.apiUrl}`)

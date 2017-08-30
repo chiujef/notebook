@@ -71,6 +71,30 @@ describe('Notebook Service tests', () => {
         });
     });
 
+    describe('getNotebook tests', () => {
+        it('should \'get\' the notebook', async() => {
+            mockBackend.connections.subscribe((connection) => {
+                expect(connection.request.method).toBe(RequestMethod.Get);
+            });
+
+            notebookService.getNotebook(1).subscribe(() => {
+                expect(true).toBe(true);
+            });
+        });
+
+        it('should return the notebook', async() => {
+            mockBackend.connections.subscribe((connection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: JSON.stringify(new Notebook(''))
+                })));
+            });
+
+            notebookService.getNotebook(1).subscribe((notebook) => {
+                expect(notebook).not.toBeNull();
+            });
+        });
+    });
+
     describe('getAllNotebook tests', () => {
         it('should \'get\' all the notebooks', async() => {
             mockBackend.connections.subscribe((connection) => {
