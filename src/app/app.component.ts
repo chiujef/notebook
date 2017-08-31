@@ -2,8 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  Inject,
-  Input
+  Inject
 } from '@angular/core';
 
 @Component({
@@ -12,15 +11,12 @@ import {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-  @Input() offset: number;
   title = 'Notebook App';
   height: number;
 
   constructor(@Inject('Window') private window: Window,
     private cdRef: ChangeDetectorRef
-  ) {
-    this.offset = 0;
-  }
+  ) { }
 
   ngAfterViewInit() {
     this.height = this.computeHeight(window.innerHeight);
@@ -32,6 +28,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   computeHeight(height: number): number {
-    return height + this.offset;
+    return height - 150;
   }
 }

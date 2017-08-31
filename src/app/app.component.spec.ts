@@ -61,16 +61,15 @@ describe('AppComponent', () => {
   }));
 
   describe('onResize tests', () => {
-    it('should add the offset to the event\'s innerHeight and save to height', () => {
+    it('should add the offset (-150) to the event\'s innerHeight and save to height', () => {
       const fixture = TestBed.createComponent(AppComponent);
       const app = fixture.debugElement.componentInstance;
-      const expectedHeight = 10;
+      const expectedHeight = 100;
       const event = {
         target: {
-          innerHeight: 0
+          innerHeight: 250
         }
       };
-      app.offset = 10;
 
       app.onResize(event);
 
@@ -79,13 +78,12 @@ describe('AppComponent', () => {
   });
 
   describe('computeHeight tests', () => {
-    it('should add the offset to the height', () => {
+    it('should add the offset (-150) to the height', () => {
       const fixture = TestBed.createComponent(AppComponent);
       const app = fixture.debugElement.componentInstance;
-      const expectedHeight = 10;
-      app.offset = 10;
+      const expectedHeight = 100;
 
-      const actual = app.computeHeight(0);
+      const actual = app.computeHeight(250);
 
       expect(actual).toBe(expectedHeight);
     });
