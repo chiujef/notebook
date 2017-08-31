@@ -35,7 +35,7 @@ export class MockService {
     }
 
     getAllNotebook(): Observable<Notebook[]> {
-        return Observable.of(this.notebooks);
+        return Observable.of(Array.from(this.notebooks));
     }
 
     updateNotebook(notebook: Notebook): Observable<Notebook> {
