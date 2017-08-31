@@ -1,5 +1,7 @@
 # Notebook
 
+_This is a work in progress..._
+
 This project was created to learn more about Angular 4. This is a simple OneNote-like web implementation.
 User can create a _**note**_ and add any text in it. The user can then compile these _**notes**_ into a _**notebook**_.
 
@@ -23,7 +25,7 @@ therefore design is not a priority.
 ## Getting Started
 
 Default settings from the [Angular CLI](https://github.com/angular/angular-cli) was retained therefore all 
-[Default Configuration](#default-configuration) should work as expected.
+[Default Configuration](#default-configuration) should work as expected. This means [`@angular/cli`](https://github.com/angular/angular-cli) should already be installed in the machine.
 
 ## Installation
 
