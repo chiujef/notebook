@@ -4,6 +4,7 @@ _This is a work in progress..._
 
 This project was created to learn more about Angular 4. This is a simple OneNote-like web implementation.
 User can create a _**note**_ and add any text in it. The user can then compile these _**notes**_ into a _**notebook**_.
+The static output of this project can also be viewed in [Notebook](https://chiujef.github.io)
 
 The codes were created with an Observable Data Service pattern as described at 
 [Angular University](http://blog.angular-university.io/how-to-build-angular2-apps-using-rxjs-observable-data-services-pitfalls-to-avoid/).
