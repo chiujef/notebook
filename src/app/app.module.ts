@@ -43,18 +43,10 @@ import {
   ],
   providers: [
     { provide: 'Window', useValue: window },
-    /*
-    NotebookService,
-    { provide: NOTEBOOK_API_URL, useValue: NOTEBOOK_API_URL },
-    */
-    { provide: NotebookService, useClass: MockService },
     NotebookStoreService,
-    /*
-    NoteService,
-    { provide: NOTE_API_URL, useValue: NOTE_API_URL },
-    */
-    { provide: NoteService, useClass: MockService },
-    NoteStoreService
+    { provide: NotebookService, useClass: MockService },
+    NoteStoreService,
+    { provide: NoteService, useClass: MockService }
   ],
   bootstrap: [AppComponent]
 })
