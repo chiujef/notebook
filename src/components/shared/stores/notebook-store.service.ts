@@ -16,8 +16,8 @@ export class NotebookStoreService {
         new BehaviorSubject(new NotebookSelectedMessage(false, null));
 
     private notebookStoreSubject: BehaviorSubject<NotebookStoreMessage> =
-        new BehaviorSubject(new NotebookStoreMessage(NotebookStoreOperation.None, new Array<Notebook>()));
-    private notebookStorage: Array<Notebook> = new Array<Notebook>();
+        new BehaviorSubject(new NotebookStoreMessage(NotebookStoreOperation.None, null));
+    private notebookStorage: Notebook[] = new Array<Notebook>();
 
     constructor(private notebookService: NotebookService) { }
 
@@ -32,7 +32,6 @@ export class NotebookStoreService {
     addNotebook(newNotebook: Notebook): void {
         this.notebookService.addNotebook(newNotebook).subscribe((notebook) => {
             let notebookStoreMessage = null;
-
             this.notebookStorage.push(notebook);
             notebookStoreMessage = new NotebookStoreMessage(NotebookStoreOperation.Added, this.notebookStorage);
             this.notebookStoreSubject.next(notebookStoreMessage);
