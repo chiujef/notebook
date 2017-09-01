@@ -10,6 +10,7 @@ import { NoteComponent } from '../index';
 import {
     Note,
     Notebook,
+    NotebookSelectedMessage,
     NotebookStoreService,
     NoteStoreMessage,
     NoteStoreOperation,
@@ -26,6 +27,7 @@ describe('Note List Component tests', () => {
     }
 
     class MockNotebookStoreService {
+        getNotebookSelectedStore: () => Observable<NotebookSelectedMessage>;
         getNotebook: (notebookId: number) => void;
     }
 
@@ -59,6 +61,8 @@ describe('Note List Component tests', () => {
             mockNotebookStoreService = TestBed.get(NotebookStoreService);
             mockNoteStoreService = TestBed.get(NoteStoreService);
 
+            mockNotebookStoreService.getNotebookSelectedStore = jasmine.createSpy('getNotebookSelectedStore')
+                .and.returnValue(Observable.of(new NotebookSelectedMessage(false, null)));
             mockNotebookStoreService.getNotebook = jasmine.createSpy('getNotebook');
 
             mockNoteStoreService.getNoteStore = jasmine.createSpy('getNoteStore')
@@ -95,6 +99,17 @@ describe('Note List Component tests', () => {
 
         fixture.whenStable().then(() => {
             expect(mockNoteStoreService.getAllNoteByNotebookId).toHaveBeenCalledWith(expectedNotebookId);
+        });
+    });
+
+    it('should set indicator if a valid notebook is selected', () => {
+        mockNotebookStoreService.getNotebookSelectedStore = jasmine.createSpy('getNotebookSelectedStore')
+            .and.returnValue(Observable.of(new NotebookSelectedMessage(true, null)));
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(noteListComponent.isNotebookSelected).toBe(true);
         });
     });
 });

@@ -10,15 +10,21 @@ import { Note, NotebookStoreService, NoteStoreService } from '../shared/index';
 })
 export class NoteListComponent implements OnInit {
     notes: Note[];
+    isNotebookSelected: boolean;
 
     constructor(private route: ActivatedRoute,
         private notebookStoreService: NotebookStoreService,
         private noteStoreService: NoteStoreService
     ) {
         this.notes = new Array<Note>();
+        this.isNotebookSelected = false;
     }
 
     ngOnInit(): void {
+        this.notebookStoreService.getNotebookSelectedStore().subscribe((notebookSelectedMessage) => {
+            this.isNotebookSelected = notebookSelectedMessage.isSelected;
+        });
+
         this.noteStoreService.getNoteStore().subscribe((noteStoreMessage) => {
             this.notes = noteStoreMessage.notes;
         });

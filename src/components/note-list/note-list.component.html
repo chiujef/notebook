@@ -4,7 +4,7 @@
             {{ note.text }}
         </nb-note>
     </a>
-    <a [routerLink]="['/notes']">
+    <a [routerLink]="['/notes']" *ngIf="isNotebookSelected">
         <span class="glyphicon glyphicon-plus"></span> New Note
     </a>
 </div>
